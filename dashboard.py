@@ -3,6 +3,16 @@ import pandas as pd
 import lightgbm
 import joblib# ✅ Utiliser joblib au lieu de pickle
 
+import subprocess
+import sys
+
+try:
+    import lightgbm
+except ModuleNotFoundError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "lightgbm"])
+    import lightgbm
+
+
 # 📌 Titre
 st.set_page_config(page_title="Dashboard Scoring Crédit", layout="wide")
 st.title("📊 Dashboard de Scoring Crédit")
