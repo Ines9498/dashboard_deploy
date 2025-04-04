@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-import joblib  # ✅ Utiliser joblib au lieu de pickle
+import lightgmb
+import joblib# ✅ Utiliser joblib au lieu de pickle
 
 # 📌 Titre
 st.set_page_config(page_title="Dashboard Scoring Crédit", layout="wide")
