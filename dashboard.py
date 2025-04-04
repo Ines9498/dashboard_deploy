@@ -1,0 +1,36 @@
+import streamlit as st
+import pandas as pd
+import pickle
+
+# 📌 Titre
+st.set_page_config(page_title="Dashboard Scoring Crédit", layout="wide")
+st.title("📊 Dashboard de Scoring Crédit")
+
+# 📥 Chargement du modèle
+with open("best_model.pkl", "rb") as f:
+    model = pickle.load(f)
+
+# 📂 Chargement des données
+@st.cache_data
+def load_data():
+    return pd.read_csv("data_test.csv")
+
+df = load_data()
+
+# 🎯 Sélection d’un client
+client_id = st.selectbox("Sélectionner un identifiant client :", df["SK_ID_CURR"].unique())
+
+# 🔍 Afficher les infos client
+client_data = df[df["SK_ID_CURR"] == client_id]
+st.write("📄 Données du client sélectionné :")
+st.dataframe(client_data)
+
+# 🧠 Prédiction
+X_client = client_data.drop(columns=["SK_ID_CURR"])
+prediction = model.predict(X_client)[0]
+proba = model.predict_proba(X_client)[0][1]
+
+# 📊 Résultat
+st.markdown("## Résultat du modèle")
+st.write(f"**Score de risque :** {proba:.2%}")
+st.write("🟩 **Crédit accordé**" if prediction == 0 else "🟥 **Crédit refusé**")
