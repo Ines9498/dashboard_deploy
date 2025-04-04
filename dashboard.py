@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import lightgmb
+import lightgbm
 import joblib# ✅ Utiliser joblib au lieu de pickle
 
 # 📌 Titre
