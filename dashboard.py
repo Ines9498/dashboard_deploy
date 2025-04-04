@@ -1,14 +1,17 @@
 import streamlit as st
 import pandas as pd
-import pickle
+import joblib  # ✅ Utiliser joblib au lieu de pickle
 
 # 📌 Titre
 st.set_page_config(page_title="Dashboard Scoring Crédit", layout="wide")
 st.title("📊 Dashboard de Scoring Crédit")
 
-# 📥 Chargement du modèle
-with open("best_model.pkl", "rb") as f:
-    model = pickle.load(f)
+# 📥 Chargement du modèle (joblib)
+@st.cache_resource
+def load_model():
+    return joblib.load("best_model.joblib")  # ✅ fichier au format joblib
+
+model = load_model()
 
 # 📂 Chargement des données
 @st.cache_data
